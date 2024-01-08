@@ -10,10 +10,7 @@ loader.style.display = 'none';
 form.addEventListener('submit', function (event) {
   event.preventDefault();
   loader.style.display = 'block';
-
-  setInterval(9000);
   const keyword = document.getElementById('search-input').value;
-
   fetch(
     `https://pixabay.com/api/?key=41657052-3a9eaf34218752c6e4cd1bc6a&image_type=photo&per_page=90&q=${encodeURIComponent(
       keyword
@@ -34,16 +31,13 @@ form.addEventListener('submit', function (event) {
           </a>
         </li>`
         );
-
         gallery.innerHTML = images.join('');
-
         var lightbox = new SimpleLightbox('.gallery a', {
           captionsData: 'alt',
           captionDelay: 5000,
           className: 'modal-window-style',
         });
         lightbox.on('show.simplelightbox', function (event) {});
-
         loader.style.display = 'none';
       } else {
         iziToast.info({
@@ -57,7 +51,7 @@ form.addEventListener('submit', function (event) {
         });
         loader.style.display = 'none';
       }
+      lightbox.refresh();
     })
     .catch(error => console.error(error));
-  lightbox.refresh();
 });
