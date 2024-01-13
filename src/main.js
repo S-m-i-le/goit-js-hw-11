@@ -6,13 +6,18 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 const form = document.getElementById('search-form');
 const gallery = document.getElementById('gallery');
 var loader = document.querySelector('.loader');
+var lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 5000,
+  className: 'modal-window-style',
+});
 loader.style.display = 'none';
 form.addEventListener('submit', function (event) {
   event.preventDefault();
   loader.style.display = 'block';
   const keyword = document.getElementById('search-input').value;
   fetch(
-    `https://pixabay.com/api/?key=41657052-3a9eaf34218752c6e4cd1bc6a&image_type=photo&per_page=90&q=${encodeURIComponent(
+    `https://pixabay.com/api/?key=41657052-3a9eaf34218752c6e4cd1bc6a&safesearch=true&orientation=horizontal&image_type=photo&per_page=90&q=${encodeURIComponent(
       keyword
     )}`
   )
@@ -32,11 +37,7 @@ form.addEventListener('submit', function (event) {
         </li>`
         );
         gallery.innerHTML = images.join('');
-        var lightbox = new SimpleLightbox('.gallery a', {
-          captionsData: 'alt',
-          captionDelay: 5000,
-          className: 'modal-window-style',
-        });
+
         lightbox.on('show.simplelightbox', function (event) {});
         loader.style.display = 'none';
       } else {
